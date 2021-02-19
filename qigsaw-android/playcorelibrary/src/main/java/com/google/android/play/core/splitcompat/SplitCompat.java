@@ -1,5 +1,6 @@
 package com.google.android.play.core.splitcompat;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.google.android.play.core.splitinstall.LoadedSplitFetcherSingleton;
@@ -21,6 +22,9 @@ public class SplitCompat {
 
     public static boolean install(Context context) {
         return installInternal(context);
+    }
+
+    public static void installActivity(Activity activity){
     }
 
     @SuppressWarnings("unused")

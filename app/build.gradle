@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 if (sample) {
     apply plugin: 'com.iqiyi.qigsaw.sample.application'
 } else {
@@ -9,7 +10,7 @@ android {
     compileSdkVersion versions.compileSdk
 
     defaultConfig {
-        applicationId "com.iqiyi.qigsaw.sample"
+        applicationId "com.playit.videoplayer"
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
         multiDexEnabled true
@@ -20,6 +21,8 @@ android {
         ndk {
             abiFilters 'arm64-v8a', 'x86'//for emulator
         }
+        flavorDimensions "channel"
+
     }
 
     signingConfigs {
@@ -54,6 +57,15 @@ android {
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
+    }
+
+    productFlavors {
+        myBundle{
+            dimension 'channel'
+        }
+        myApk{
+            dimension 'channel'
+        }
     }
 
     dynamicFeatures = [':java', ':assets', ':native']
@@ -139,12 +151,18 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     if (sample) {
-        api "com.iqiyi.android.qigsaw:splitcore:${VERSION_NAME}"
+        myApkApi "com.iqiyi.android.qigsaw:splitcore:${VERSION_NAME}"
     } else {
-        api project(':splitcore')
+        myApkApi project(':splitcore')
     }
     implementation project(':downloader')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+}
+repositories {
+    mavenCentral()
 }

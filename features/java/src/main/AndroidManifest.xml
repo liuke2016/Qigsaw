@@ -12,11 +12,7 @@
             android:name=".JavaSampleActivity"
             android:process=":qigsaw" />
 
-        <provider
-            android:name=".JavaContentProvider"
-            android:authorities="java.feature"
-            android:enabled="true"
-            android:exported="false" />
+
 
     </application>
 

@@ -25,6 +25,17 @@ android {
         targetSdkVersion versions.targetSdk
         versionCode 1
         versionName "1.0"
+        flavorDimensions "channel"
+
+    }
+
+    productFlavors {
+        myBundle{
+            dimension 'channel'
+        }
+        myApk{
+            dimension 'channel'
+        }
     }
 
     signingConfigs {
