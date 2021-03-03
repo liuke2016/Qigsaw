@@ -1,5 +1,6 @@
 apply plugin: 'com.android.dynamic-feature'
 apply plugin: 'com.iqiyi.qigsaw.dynamicfeature'
+apply from :'../../bytex.gradle'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -34,6 +35,10 @@ android {
             keyAlias "qigsawtest"
             keyPassword "qigsawtest"
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

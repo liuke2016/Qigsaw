@@ -13,14 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.play.core.splitinstall.SplitInstallManager;
-import com.google.android.play.core.splitinstall.SplitInstallManagerFactory;
-import com.google.android.play.core.splitinstall.SplitInstallRequest;
-import com.google.android.play.core.splitinstall.SplitInstallSessionState;
-import com.google.android.play.core.splitinstall.SplitInstallStateUpdatedListener;
-import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus;
-import com.google.android.play.core.tasks.OnFailureListener;
-import com.google.android.play.core.tasks.OnSuccessListener;
+import com.heflash.android.play.core.splitinstall.SplitInstallManager;
+import com.heflash.android.play.core.splitinstall.SplitInstallManagerFactory;
+import com.heflash.android.play.core.splitinstall.SplitInstallRequest;
+import com.heflash.android.play.core.splitinstall.SplitInstallSessionState;
+import com.heflash.android.play.core.splitinstall.SplitInstallStateUpdatedListener;
+import com.heflash.android.play.core.splitinstall.model.SplitInstallSessionStatus;
+import com.heflash.android.play.core.tasks.OnFailureListener;
+import com.heflash.android.play.core.tasks.OnSuccessListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;

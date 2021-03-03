@@ -26,7 +26,7 @@ package com.iqiyi.qigsaw.buildtool.gradle.transform
 
 interface SplitComponentWeaver {
 
-    String CLASS_WOVEN = "com/google/android/play/core/splitinstall/SplitInstallHelper"
+    String CLASS_WOVEN = "com/heflash/android/play/core/splitinstall/SplitInstallHelper"
 
     String METHOD_WOVEN = "loadResources"
 

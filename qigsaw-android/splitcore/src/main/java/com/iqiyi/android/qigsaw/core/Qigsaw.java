@@ -34,7 +34,7 @@ import android.os.MessageQueue;
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 
-import com.google.android.play.core.splitcompat.SplitCompat;
+import com.heflash.android.play.core.splitcompat.SplitCompat;
 import com.iqiyi.android.qigsaw.core.common.ProcessUtil;
 import com.iqiyi.android.qigsaw.core.common.SplitBaseInfoProvider;
 import com.iqiyi.android.qigsaw.core.common.SplitConstants;

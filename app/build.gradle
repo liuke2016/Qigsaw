@@ -5,6 +5,8 @@ if (sample) {
 } else {
     apply plugin: 'com.iqiyi.qigsaw.application'
 }
+apply from :'../bytex.gradle'
+
 
 android {
     compileSdkVersion versions.compileSdk

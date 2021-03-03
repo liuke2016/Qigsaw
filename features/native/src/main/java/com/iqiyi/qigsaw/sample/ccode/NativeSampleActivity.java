@@ -5,8 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.google.android.play.core.splitcompat.SplitCompat;
-import com.google.android.play.core.splitinstall.SplitInstallHelper;
+import com.heflash.android.play.core.splitcompat.SplitCompat;
+import com.heflash.android.play.core.splitinstall.SplitInstallHelper;
 
 
 public class NativeSampleActivity extends Activity {

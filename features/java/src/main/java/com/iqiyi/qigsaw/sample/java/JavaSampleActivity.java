@@ -3,8 +3,9 @@ package com.iqiyi.qigsaw.sample.java;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
-import com.google.android.play.core.splitcompat.SplitCompat;
+import com.heflash.android.play.core.splitcompat.SplitCompat;
 
 public class JavaSampleActivity extends Activity {
 
@@ -12,6 +13,7 @@ public class JavaSampleActivity extends Activity {
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(newBase);
         SplitCompat.installActivity(this);
+        new Test().test();
     }
 
     @Override

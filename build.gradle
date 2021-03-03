@@ -3,16 +3,29 @@
 
 buildscript {
     ext.kotlin_version = '1.4.30'
+    ext.bytex_version="0.2.7"
 
     repositories {
         google()
         jcenter()
+        maven { url 'https://oss.sonatype.org/content/repositories/public' }
+        maven { url "http://47.106.194.167:8088/repository/nemo-public/" }
+
     }
     dependencies {
         classpath "com.android.tools.build:gradle:${AGP_VERSION}"
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.bytedance.android.byteX:base-plugin:${bytex_version}"
+        classpath "com.bytedance.android.byteX:GradleToolKit:0.2.8-2-SNAPSHOT"
+        classpath "com.bytedance.android.byteX:shrink-r-plugin:${bytex_version}"
+        classpath "com.bytedance.android.byteX:const-inline-plugin:${bytex_version}"
+        classpath "com.bytedance.android.byteX:field-assign-opt-plugin:${bytex_version}"
+        classpath "com.bytedance.android.byteX:method-call-opt-plugin:${bytex_version}"
+        classpath "com.bytedance.android.byteX:SourceFileKiller:${bytex_version}"
+        classpath "com.bytedance.android.byteX:getter-setter-inline-plugin:${bytex_version}"
+        classpath "com.bytedance.android.byteX:access-inline-plugin:${bytex_version}"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

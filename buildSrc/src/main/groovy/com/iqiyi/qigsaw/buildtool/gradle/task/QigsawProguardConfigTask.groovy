@@ -38,6 +38,7 @@ class QigsawProguardConfigTask extends DefaultTask {
 
     static final String PROGUARD_CONFIG_SETTINGS =
             "-keep class com.google.android.play.core.**{\n *;\n }\n" +
+            "-keep class com.heflash.android.play.core.**{\n *;\n }\n" +
                     "-keep class com.split.signature.**{\n *;\n }\n" +
                     "-keep class com.iqiyi.android.qigsaw.core.extension.ComponentInfo{\n *;\n }\n" +
                     "-keep class com.iqiyi.android.qigsaw.core.splitlib.**{\n *;\n }\n"

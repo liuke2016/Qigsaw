@@ -1,5 +1,6 @@
 apply plugin: 'com.android.dynamic-feature'
 apply plugin: 'com.iqiyi.qigsaw.dynamicfeature'
+apply from :'../../bytex.gradle'
 
 android {
     compileSdkVersion versions.compileSdk
