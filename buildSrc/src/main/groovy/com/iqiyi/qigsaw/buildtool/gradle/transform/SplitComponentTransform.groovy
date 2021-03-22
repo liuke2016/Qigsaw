@@ -56,8 +56,11 @@ class SplitComponentTransform extends SimpleClassCreatorTransform {
 
     @Override
     Collection<SecondaryFile> getSecondaryFiles() {
-        FileCollection collection = project.files(splitManifestParentDir)
-        return ImmutableSet.of(SecondaryFile.nonIncremental(collection))
+        if(splitManifestParentDir!=null){
+            FileCollection collection = project.files(splitManifestParentDir)
+            return ImmutableSet.of(SecondaryFile.nonIncremental(collection))
+        }
+        return  ImmutableSet.of(SecondaryFile.nonIncremental(project.files("build")))
     }
 
     @Override

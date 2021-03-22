@@ -40,6 +40,7 @@ import com.iqiyi.qigsaw.buildtool.gradle.task.*
 import com.iqiyi.qigsaw.buildtool.gradle.transform.SplitComponentTransform
 import com.iqiyi.qigsaw.buildtool.gradle.transform.SplitResourcesLoaderTransform
 import org.gradle.api.GradleException
+import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.artifacts.Configuration
@@ -294,7 +295,7 @@ class QigsawAppBasePlugin extends QigsawPlugin {
                     }
                     dynamicFeatures.each { String dynamicFeature ->
                         Project splitProject = project.rootProject.project(dynamicFeature)
-                        ProcessTaskDependenciesBetweenBaseAndSplitsWithQigsaw taskDependenciesProcessor = new ProcessTaskDependenciesBetweenBaseAndSplitsWithQigsaw()
+                        ProcessTaskDependenciesBetweenBaseAndSplitsWithQigsaw taskDependenciesProcessor = new ProcessTaskDependenciesBetweenBaseAndSplitsWithQigsaw(project)
                         boolean isProjectEvaluated
                         try {
                             splitProject.extensions.android
@@ -406,6 +407,11 @@ class QigsawAppBasePlugin extends QigsawPlugin {
 
     static class ProcessTaskDependenciesBetweenBaseAndSplitsWithQigsaw extends ProcessTaskDependenciesBetweenBaseAndSplits {
 
+        Project project
+
+        ProcessTaskDependenciesBetweenBaseAndSplitsWithQigsaw(Project project) {
+            this.project = project
+        }
         ApkSigner apkSigner
 
         Task baseMergeJinLibs
@@ -449,7 +455,7 @@ class QigsawAppBasePlugin extends QigsawPlugin {
             Task splitAssemble = AGPCompat.getAssemble(splitVariant)
             ProcessSplitApkTask processSplitApk = splitProject.tasks.create("processSplitApk${splitVariant.name.capitalize()}", ProcessSplitApkTask)
             processSplitApk.apkSigner = apkSigner
-            processSplitApk.aapt2File = new File(AGPCompat.getAapt2FromMavenCompat(baseVariant), SdkConstants.FN_AAPT2)
+            processSplitApk.aapt2File = new File(AGPCompat.getAapt2FromMavenCompat(project,baseVariant), SdkConstants.FN_AAPT2)
             processSplitApk.releaseSplitApk = QigsawSplitExtensionHelper.isReleaseSplitApk(baseProject)
             processSplitApk.restrictWorkProcessesForSplits = QigsawSplitExtensionHelper.getRestrictWorkProcessesForSplits(baseProject)
             processSplitApk.minApiLevel = minApiLevel

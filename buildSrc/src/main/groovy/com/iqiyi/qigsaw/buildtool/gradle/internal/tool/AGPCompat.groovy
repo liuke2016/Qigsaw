@@ -31,6 +31,7 @@ import com.android.utils.ILogger
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.Task
+import org.gradle.api.file.FileCollection
 import org.gradle.util.VersionNumber
 
 import java.lang.reflect.Constructor
@@ -51,19 +52,36 @@ class AGPCompat {
         return mergedAssetsOutputDir
     }
 
-    static File getAapt2FromMavenCompat(def variant) {
+    static File getAapt2FromMavenCompat(Project project, def variant) {
         try {
-            Class class_Aapt2MavenUtils = Class.forName("com.android.build.gradle.internal.res.Aapt2MavenUtils")
-            Method method_getAapt2FromMaven = class_Aapt2MavenUtils.getDeclaredMethod("getAapt2FromMaven", GlobalScope)
-            method_getAapt2FromMaven.setAccessible(true)
+
             def versionAGP = VersionNumber.parse(getAndroidGradlePluginVersionCompat())
-            def aapt2
-            if(versionAGP >= VersionNumber.parse("4.1.0")){
-                aapt2 = method_getAapt2FromMaven.invoke(null, variant.variantData.globalScope).singleFile
+            if(versionAGP>= VersionNumber.parse("4.2.0-beta06")){
+                def basePluginClazz = Class.forName("com.android.build.gradle.internal.plugins.BasePlugin")
+                def appPlugin = project.plugins.findPlugin("com.android.internal.application")
+                def projectServicesField = basePluginClazz.getDeclaredField("projectServices")
+                projectServicesField.setAccessible(true)
+                def projectServices = projectServicesField.get(appPlugin)
+                def aapt2FromMavenField = projectServices.class.getDeclaredField("aapt2FromMaven")
+                aapt2FromMavenField.setAccessible(true)
+                def aapt2FromMaven = aapt2FromMavenField.get(projectServices)
+                def aapt2DirectoryField = aapt2FromMaven.class.getDeclaredField("aapt2Directory")
+                aapt2DirectoryField.setAccessible(true)
+                def aapt2Directory = aapt2DirectoryField.get(aapt2FromMaven)
+                return (aapt2Directory as FileCollection).singleFile
             }else{
-                aapt2 = method_getAapt2FromMaven.invoke(null, variant.variantData.scope.globalScope).singleFile
+                Class class_Aapt2MavenUtils = Class.forName("com.android.build.gradle.internal.res.Aapt2MavenUtils")
+                Method method_getAapt2FromMaven = class_Aapt2MavenUtils.getDeclaredMethod("getAapt2FromMaven", GlobalScope)
+                method_getAapt2FromMaven.setAccessible(true)
+                def aapt2
+                if(versionAGP >= VersionNumber.parse("4.1.0")){
+                    aapt2 = method_getAapt2FromMaven.invoke(null, variant.variantData.globalScope).singleFile
+                }else{
+                    aapt2 = method_getAapt2FromMaven.invoke(null, variant.variantData.scope.globalScope).singleFile
+                }
+                return aapt2
             }
-            return aapt2
+
         } catch (Throwable e) {
             throw new GradleException("Unable to obtain aapt2", e)
         }
