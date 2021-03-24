@@ -28,7 +28,8 @@
             android:name=".SampleObtainUserConfirmationDialog"
             android:exported="false"
             android:screenOrientation="portrait"/>
-
+        <service android:name="com.iqiyi.qigsaw.sample.TestService"
+            android:process=":qigsaw"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

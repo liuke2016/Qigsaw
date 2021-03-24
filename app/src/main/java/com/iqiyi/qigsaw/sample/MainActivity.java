@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         moduleAssets = getString(R.string.module_feature_assets);
         moduleNative = getString(R.string.module_feature_native);
 
-
+        startService(new Intent(this,TestService.class));
     }
 
     @Override

@@ -1,2 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.google.android.play.core" />
+    package="com.google.android.play.core">
+
+    <application>
+        <provider
+            android:name="com.heflash.android.play.core.IPCContentProvider"
+            android:authorities="${applicationId}.IPCContentProvider"
+            android:exported="false"
+            android:multiprocess="false" />
+    </application>
+
+</manifest>

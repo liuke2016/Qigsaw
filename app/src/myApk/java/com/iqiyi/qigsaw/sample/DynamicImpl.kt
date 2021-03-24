@@ -22,7 +22,6 @@ class DynamicImpl:IDynamic {
     override fun attachBaseContext(context: Context) {
         val configuration = SplitConfiguration.newBuilder()
                 .splitLoadMode(SplitLoad.MULTIPLE_CLASSLOADER)
-                .workProcesses(arrayOf(":qigsaw"))
                 .logger(SampleLogger())
                 .verifySignature(true)
                 .loadReporter(SampleSplitLoadReporter(context))

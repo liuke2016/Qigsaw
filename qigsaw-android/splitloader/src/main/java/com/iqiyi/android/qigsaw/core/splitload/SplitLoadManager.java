@@ -134,7 +134,7 @@ public abstract class SplitLoadManager {
         return splitApkPaths;
     }
 
-    Context getContext() {
+    public Context getContext() {
         return context;
     }
 

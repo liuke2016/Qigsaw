@@ -28,8 +28,12 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.ContentObserver;
+import android.net.Uri;
+import android.os.Handler;
 import android.os.Looper;
 import android.os.MessageQueue;
+import android.text.TextUtils;
 
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
@@ -49,9 +53,13 @@ import com.iqiyi.android.qigsaw.core.splitreport.DefaultSplitInstallReporter;
 import com.iqiyi.android.qigsaw.core.splitreport.DefaultSplitLoadReporter;
 import com.iqiyi.android.qigsaw.core.splitreport.DefaultSplitUninstallReporter;
 import com.iqiyi.android.qigsaw.core.splitreport.DefaultSplitUpdateReporter;
+import com.iqiyi.android.qigsaw.core.splitrequest.splitinfo.SplitInfoManager;
+import com.iqiyi.android.qigsaw.core.splitrequest.splitinfo.SplitInfoManagerService;
 import com.iqiyi.android.qigsaw.core.splitrequest.splitinfo.SplitUpdateReporterManager;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Keep
@@ -167,8 +175,28 @@ public class Qigsaw {
             }
         }
         onApplicationCreated = true;
+        context.getContentResolver().registerContentObserver(Uri.parse("content://"+context.getPackageName()+".IPCContentProvider/"),true,mPluginUpdateObserver);
     }
 
+    private ContentObserver mPluginUpdateObserver = new ContentObserver(new Handler()) {
+
+        @Override
+        public void onChange(boolean selfChange,Uri uri) {
+            super.onChange(selfChange,uri);
+            String url = uri.toString();
+            String path = url.substring(url.lastIndexOf("/")+1);
+            if(!TextUtils.isEmpty(path)){
+                String[] split = path.split("#");
+                String pluginName = split[0];
+                String processName = ProcessUtil.getProcessName(context);
+                if(!processName.equals(split[1])){
+                    List<String> plugins = new ArrayList<>();
+                    plugins.add(pluginName);
+                    Qigsaw.preloadInstalledSplits(plugins);
+                }
+            }
+        }
+    };
     /**
      * Preload installed splits.
      *
